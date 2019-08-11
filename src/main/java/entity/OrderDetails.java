@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Column;
 import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.GenerationType;
@@ -23,7 +24,7 @@ public class OrderDetails {
     @JoinColumn(name = "basketID")
     private Basket basket;
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "userID")
     private User user;
 

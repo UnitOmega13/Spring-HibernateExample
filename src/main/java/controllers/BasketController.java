@@ -40,8 +40,8 @@ public class BasketController {
         return "user_products";
     }
 
-    @GetMapping("/buy/{id}")
-    public String showBasketSize(@PathVariable("id") Long productID,
+    @GetMapping("/buy/{productID}")
+    public String showBasketSize(@PathVariable("productID") Long productID,
                                  @AuthenticationPrincipal User user) {
         Product product = null;
         Optional<Product> optionalProduct = productService.getProduct(productID);

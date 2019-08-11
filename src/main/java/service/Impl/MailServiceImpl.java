@@ -1,10 +1,7 @@
 package service.Impl;
 
-import dao.BasketDAO;
 import entity.OrderDetails;
-import entity.User;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import service.MailService;
@@ -27,7 +24,7 @@ public class MailServiceImpl implements MailService {
     private static final Logger logger = Logger.getLogger(MailServiceImpl.class);
 
     @Transactional
-    Properties getProperties() {
+    public Properties getProperties() {
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
@@ -37,7 +34,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Transactional
-    Session getSession() {
+    public Session getSession() {
         return Session.getInstance(getProperties(),
                 new Authenticator() {
                     @Override
@@ -47,6 +44,7 @@ public class MailServiceImpl implements MailService {
                 });
     }
 
+    @Transactional
     @Override
     public void sendConfirmCode(OrderDetails orderDetails) {
         Session session = getSession();

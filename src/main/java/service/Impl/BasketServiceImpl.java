@@ -29,6 +29,7 @@ public class BasketServiceImpl implements BasketService {
         basketDAO.createBasket(basket);
     }
 
+    @Transactional
     @Override
     public int size(Basket basket) {
         return basketDAO.size(basket);

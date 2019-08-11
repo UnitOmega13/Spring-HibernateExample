@@ -21,11 +21,13 @@ public class OrderDetailsServiceImpl implements OrderService {
         orderDetailsDAO.addOrder(orderDetails);
     }
 
+    @Transactional
     @Override
     public Optional<OrderDetails> getById(Long orderID) {
         return orderDetailsDAO.getById(orderID);
     }
 
+    @Transactional
     @Override
     public Optional<OrderDetails> getUsersOrder(User user) {
         return orderDetailsDAO.getUsersOrder(user);

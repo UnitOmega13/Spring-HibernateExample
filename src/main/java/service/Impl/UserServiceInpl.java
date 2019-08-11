@@ -39,6 +39,7 @@ public class UserServiceInpl implements UserService {
         return userDao.getUserByEmail(email);
     }
 
+    @Transactional
     @Override
     public Optional<User> getUserByLogin(String login) {
         return userDao.getUserByLogin(login);
