@@ -6,16 +6,22 @@ import entity.Product;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import service.BasketService;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Service
 public class BasketServiceImpl implements BasketService {
-    @Autowired
+
     private BasketDAO basketDAO;
+
+    @Autowired
+    public BasketServiceImpl(BasketDAO basketDao) {
+        this.basketDAO = basketDao;
+    }
 
     @Transactional
     @Override

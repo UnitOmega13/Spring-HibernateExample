@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
@@ -18,27 +19,22 @@ import java.util.Optional;
 @Repository
 public class UserDaoHibernate implements UsersDAO {
     private static final Logger logger = Logger.getLogger(UserDaoHibernate.class);
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private SessionFactory sessionFactory;
 
     @Autowired
-    public UserDaoHibernate(SessionFactory sessionFactory) {
+    public UserDaoHibernate(SessionFactory sessionFactory, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.sessionFactory = sessionFactory;
     }
 
     @Override
     public void add(User user) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-            logger.info("User added");
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            logger.error("Error adding user", e);
-        }
+        Session session = sessionFactory.getCurrentSession();
+        String saltedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(saltedPassword);
+        session.save(user);
+        logger.info(user + " created");
     }
 
     @Override
@@ -57,19 +53,11 @@ public class UserDaoHibernate implements UsersDAO {
 
     @Override
     public void removeUser(Long userId) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            if (getUserById(userId).isPresent()) {
-                session.delete(getUserById(userId).get());
-            }
-            transaction.commit();
-            logger.info("User removed");
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            logger.error("Error removing user", e);
+        Session session = sessionFactory.getCurrentSession();
+        User user = session.get(User.class, userId);
+        if (user != null) {
+            session.delete(user);
+            logger.info(user + " remover");
         }
     }
 
@@ -92,18 +80,11 @@ public class UserDaoHibernate implements UsersDAO {
     }
 
     @Override
-    public void updateUser(User newUser) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            transaction = session.beginTransaction();
-            session.update("user", newUser);
-            transaction.commit();
-            logger.info("User updated");
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            logger.error("Error updating user", e);
-        }
+    public void updateUser(User updatedUser) {
+        Session session = sessionFactory.getCurrentSession();
+        String saltedPassword = bCryptPasswordEncoder.encode(updatedUser.getPassword());
+        updatedUser.setPassword(saltedPassword);
+        session.update(updatedUser);
+        logger.info(updatedUser + " updated");
     }
 }

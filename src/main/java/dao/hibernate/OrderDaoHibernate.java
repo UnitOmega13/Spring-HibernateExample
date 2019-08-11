@@ -8,17 +8,22 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class OrderDaoHibernate implements OrderDetailsDAO {
     private static final Logger logger = Logger.getLogger(OrderDaoHibernate.class);
+    private SessionFactory sessionFactory;
 
     @Autowired
-    private SessionFactory sessionFactory;
+    public OrderDaoHibernate(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public void addOrder(OrderDetails orderDetails) {

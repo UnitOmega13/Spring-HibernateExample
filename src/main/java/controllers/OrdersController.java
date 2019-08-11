@@ -5,6 +5,7 @@ import entity.DigitalCode;
 import entity.OrderDetails;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class OrdersController {
 
     @PostMapping
     public String createOrder(@ModelAttribute("order") OrderDetails orderDetails,
-                              @SessionAttribute("user") User user) {
+                              @AuthenticationPrincipal User user) {
         digitalCodeService.create(new DigitalCode(user));
         DigitalCode digitalCode = null;
         Optional<DigitalCode> optionalCode = digitalCodeService.getLastCode(user);
@@ -69,7 +70,7 @@ public class OrdersController {
 
     @PostMapping("/confirm")
     public String confirmOrder(@RequestParam("confirm") String confirm,
-                               @SessionAttribute("user") User user,
+                               @AuthenticationPrincipal User user,
                                Model model) {
         Optional<OrderDetails> optionalOrderDetails = orderService.getUsersOrder(user);
         if (optionalOrderDetails.isPresent()) {

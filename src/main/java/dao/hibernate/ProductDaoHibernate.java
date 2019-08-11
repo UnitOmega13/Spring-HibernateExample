@@ -18,9 +18,12 @@ import java.util.Optional;
 @Repository
 public class ProductDaoHibernate implements ProductDAO {
     private static final Logger logger = Logger.getLogger(ProductDaoHibernate.class);
+    private SessionFactory sessionFactory;
 
     @Autowired
-    private SessionFactory sessionFactory;
+    public ProductDaoHibernate(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public void add(Product product) {

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TypedQuery;
+import java.io.UncheckedIOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,10 +38,12 @@ public class DigitalCodeHibernate implements DigitalCodeDao {
         return Optional.ofNullable(digitalCode);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<DigitalCode> getLastCode(User user) {
         Session session = sessionFactory.getCurrentSession();
-        TypedQuery<DigitalCode> query = session.createQuery("from code where user = :user order by id desc ");
+        TypedQuery<DigitalCode> query;
+        query = session.createQuery("from code where user = :user order by id desc ");
         query.setParameter("user", user);
         List resultList = query.getResultList();
         if (resultList.isEmpty()) {

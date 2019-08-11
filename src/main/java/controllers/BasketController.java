@@ -4,6 +4,8 @@ import entity.Basket;
 import entity.Product;
 import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,7 @@ import service.ProductService;
 
 import java.util.Optional;
 
-@Repository
+@Controller
 @RequestMapping("/user/products")
 public class BasketController {
     private BasketService basketService;
@@ -29,7 +31,7 @@ public class BasketController {
     }
 
     @GetMapping
-    public String showAllProducts(@SessionAttribute("user") User user,
+    public String showAllProducts(@AuthenticationPrincipal User user,
                                       Model model) {
         Optional<Basket> optionalBasket = basketService.getUserBasket(user);
         optionalBasket.ifPresent(basket ->
@@ -40,7 +42,7 @@ public class BasketController {
 
     @GetMapping("/buy/{id}")
     public String showBasketSize(@PathVariable("id") Long productID,
-                                 @SessionAttribute("user") User user) {
+                                 @AuthenticationPrincipal User user) {
         Product product = null;
         Optional<Product> optionalProduct = productService.getProduct(productID);
         if (optionalProduct.isPresent()) {

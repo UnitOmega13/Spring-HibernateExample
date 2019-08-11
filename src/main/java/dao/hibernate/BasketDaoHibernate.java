@@ -10,17 +10,23 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import utils.HibernateUtil;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class BasketDaoHibernate implements BasketDAO {
-    private static final Logger logger = Logger.getLogger(UserDaoHibernate.class);
+
+    private SessionFactory sessionFactory;
+    private static final Logger logger = Logger.getLogger(BasketDaoHibernate.class);
 
     @Autowired
-    private SessionFactory sessionFactory;
+    public BasketDaoHibernate(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public void createBasket(Basket basket) {
