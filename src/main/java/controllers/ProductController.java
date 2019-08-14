@@ -51,10 +51,14 @@ public class ProductController {
     }
 
     @PostMapping("/edit")
-    public String changeProduct(@ModelAttribute Product product) {
-        if (product.getPrice() == null) {
-            product.setPrice(0.0);
-        }
+    private String editProduct(@RequestParam("edit") Long productId,
+                               @RequestParam("product") String productName,
+                               @RequestParam("description") String description,
+                               @RequestParam("price") Double price) {
+        Product product = productService.getProduct(productId).get();
+        product.setName(productName);
+        product.setDescription(description);
+        product.setPrice(price);
         productService.updateProduct(product);
         return "redirect:/admin/products";
     }

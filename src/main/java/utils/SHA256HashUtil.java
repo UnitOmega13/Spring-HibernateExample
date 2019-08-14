@@ -8,7 +8,6 @@ import java.security.MessageDigest;
 public class SHA256HashUtil {
     private static final Logger logger = Logger.getLogger(SHA256HashUtil.class);
 
-    @Test
     public static String getSha256(String value) {
         try {
             if (value.isEmpty()) {
@@ -23,7 +22,6 @@ public class SHA256HashUtil {
         }
     }
 
-    @Test
     private static String bytesToHex(byte[] bytes) {
         StringBuilder result = new StringBuilder();
         for (byte b : bytes)

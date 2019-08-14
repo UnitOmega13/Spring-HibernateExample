@@ -27,7 +27,7 @@ public class DigitalCodeHibernate implements DigitalCodeDao {
     public void create(DigitalCode digitalCode) {
         Session session = sessionFactory.getCurrentSession();
         session.save(digitalCode);
-        logger.info("created");
+        logger.info("Code created and save");
     }
 
     @Override

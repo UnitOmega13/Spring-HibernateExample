@@ -27,7 +27,7 @@ public class MailServiceImpl implements MailService {
     private static final Logger logger = Logger.getLogger(MailServiceImpl.class);
 
     @Transactional
-    Properties getProperties() {
+     public Properties getProperties() {
         Properties properties = new Properties();
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
@@ -37,7 +37,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Transactional
-    Session getSession() {
+    public Session getSession() {
         return Session.getInstance(getProperties(),
                 new Authenticator() {
                     @Override

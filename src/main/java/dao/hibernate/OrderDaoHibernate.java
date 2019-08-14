@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import utils.HibernateUtil;
 
 import javax.persistence.TypedQuery;
@@ -20,6 +21,7 @@ public class OrderDaoHibernate implements OrderDetailsDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Transactional
     @Override
     public void addOrder(OrderDetails orderDetails) {
         Transaction transaction = null;
@@ -36,6 +38,7 @@ public class OrderDaoHibernate implements OrderDetailsDAO {
         }
     }
 
+    @Transactional
     @Override
     public Optional<OrderDetails> getById(Long orderID) {
         Session session = sessionFactory.getCurrentSession();
@@ -43,6 +46,7 @@ public class OrderDaoHibernate implements OrderDetailsDAO {
         return Optional.ofNullable(orderDetails);
     }
 
+    @Transactional
     @Override
     public Optional<OrderDetails> getUsersOrder(User user) {
         Session session = sessionFactory.getCurrentSession();

@@ -37,9 +37,9 @@ public class BasketController {
         model.addAttribute("productList", productService.getAll());
         return "user_products";
     }
-
-    @GetMapping("/buy/{id}")
-    public String showBasketSize(@PathVariable("id") Long productID,
+    
+    @GetMapping("/buy/{productID}")
+    public String showBasketSize(@PathVariable("productID") Long productID,
                                  @SessionAttribute("user") User user) {
         Product product = null;
         Optional<Product> optionalProduct = productService.getProduct(productID);

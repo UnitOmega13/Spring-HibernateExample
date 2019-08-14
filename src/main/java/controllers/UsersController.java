@@ -44,11 +44,9 @@ public class UsersController {
         String login = user.getLogin();
         String password = user.getPassword();
         String role = user.getAccessRole();
-        Optional<User> optionalPresentUserByLogin = userService.getUserByLogin(login);
-        Optional<User> optionalPresentUserByEmail = userService.getUserByLogin(login);
         if (email.isEmpty() || login.isEmpty() || password.isEmpty() || role == null) {
             model.addAttribute("error", "Empty fields!");
-        } else if (optionalPresentUserByLogin.isPresent() || optionalPresentUserByEmail.isPresent()) {
+        } else if (userService.getUserByLogin(login).isPresent() || userService.getUserByEmail(login).isPresent()) {
             model.addAttribute("error", "User with this login or email already exist");
         } else if (!password.equals(repeatPassword) || password.length() > 20) {
             model.addAttribute("error", "Passwords are not equals or too big!");

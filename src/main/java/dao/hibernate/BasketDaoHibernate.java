@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BasketDaoHibernate implements BasketDAO {
-    private static final Logger logger = Logger.getLogger(UserDaoHibernate.class);
+    private static final Logger logger = Logger.getLogger(BasketDaoHibernate.class);
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -37,7 +37,7 @@ public class BasketDaoHibernate implements BasketDAO {
     @Override
     public Optional<Basket> getUserBasket(User user) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            Query query = session.createQuery("FROM basket where Users = :user");
+            Query query = session.createQuery("FROM basket WHERE Users = :user");
             query.setParameter("user", user);
             Basket basket = (Basket) query.uniqueResult();
             return Optional.of(basket);

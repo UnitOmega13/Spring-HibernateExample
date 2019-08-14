@@ -6,7 +6,11 @@ import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.PostMapping;
 import service.BasketService;
 import service.ProductService;
 import service.UserService;
@@ -72,10 +76,9 @@ public class Init {
         }
     }
 
-    @GetMapping("/init")
+    @GetMapping("/initialization")
     public String addUser() {
         User admin = new User(1 ,"Max", "Hruslov", "example@example.com", "Admin");
-        User admin2 = new User(2 ,"Maxim", "Hruslov", "example@example.com", "Admin");
         User user = new User(3, "Test", "Last_test", "test@example.com", "User");
         userService.add(admin);
         userService.add(user);
@@ -89,6 +92,6 @@ public class Init {
         productService.add(product3);
         Product product4 = new Product(3L,"Headphones", "Bluetooth headphones", 24.99);
         productService.add(product4);
-        return "index";
+        return "/index";
     }
 }
