@@ -3,10 +3,13 @@ package service;
 import entity.OrderDetails;
 import entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface OrderService {
-    void addOrder (OrderDetails OrderDetails);
-    Optional<OrderDetails> getById(Long orderID);
-    Optional<OrderDetails> getUsersOrder(User user);
+    List<OrderDetails> getAll();
+    void newOrder(OrderDetails orderDetails);
+    Optional<OrderDetails> getOrderById(Long id);
+    Optional<OrderDetails> getOrderByUserId(Long userId);
+    void remove(Long id);
 }

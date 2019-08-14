@@ -1,47 +1,51 @@
 package service.Impl;
 
-import dao.ProductDAO;
 import entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import repository.ProductRepository;
 import service.ProductService;
 
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Service
 public class ProductServiceImpl implements ProductService {
+    private ProductRepository productRepository;
+
     @Autowired
-    private ProductDAO productDAO;
+    public ProductServiceImpl(ProductRepository productRepository){
+        this.productRepository = productRepository;
+    }
 
     @Transactional
     @Override
     public void add(Product product) {
-        productDAO.add(product);
+        productRepository.save(product);
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<Product> getAll() {
-        return productDAO.getAll();
+        return productRepository.findAll();
     }
 
     @Transactional
     @Override
     public Optional<Product> getProduct(long productID) {
-        return productDAO.getProduct(productID);
+        return productRepository.findById(productID);
     }
 
     @Transactional
     @Override
     public void removeProduct(long productID) {
-        productDAO.removeProduct(productID);
+        productRepository.deleteById(productID);
     }
 
     @Transactional
     @Override
     public void updateProduct(Product product) {
-        productDAO.updateProduct(product);
+        productRepository.save(product);
     }
 }

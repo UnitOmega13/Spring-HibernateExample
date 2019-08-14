@@ -1,39 +1,51 @@
 package service.Impl;
 
-import dao.DigitalCodeDao;
 import entity.DigitalCode;
-import entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import repository.CodeRepository;
 import service.DigitalCodeService;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class DigitalCodeServiceImpl implements DigitalCodeService {
-    private  DigitalCodeDao digitalCodeDao;
+    private CodeRepository digitalCodeRepository;
 
     @Autowired
-    public DigitalCodeServiceImpl(DigitalCodeDao digitalCodeDao){
-        this.digitalCodeDao = digitalCodeDao;
+    public DigitalCodeServiceImpl(CodeRepository digitalCodeRepository) {
+        this.digitalCodeRepository = digitalCodeRepository;
+    }
+
+    @Transactional
+    @Override
+    public List<DigitalCode> getAll() {
+        return digitalCodeRepository.findAll();
     }
 
     @Transactional
     @Override
     public void create(DigitalCode digitalCode) {
-        digitalCodeDao.create(digitalCode);
+        digitalCodeRepository.save(digitalCode);
     }
 
     @Transactional
     @Override
-    public Optional<DigitalCode> getById(Long codeID) {
-        return digitalCodeDao.getById(codeID);
+    public Optional<DigitalCode> getCodeById(Long id) {
+        return digitalCodeRepository.findById(id);
     }
 
     @Transactional
     @Override
-    public Optional<DigitalCode> getLastCode(User user) {
-        return digitalCodeDao.getLastCode(user);
+    public Optional<DigitalCode> getCodeByUserId(Long userId) {
+        return digitalCodeRepository.getDigitalCodeByUserID(userId);
+    }
+
+    @Transactional
+    @Override
+    public void remove(Long codeId) {
+        digitalCodeRepository.deleteById(codeId);
     }
 }

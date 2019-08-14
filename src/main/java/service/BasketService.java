@@ -8,8 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BasketService {
+    List<Basket> getAll();
     void createBasket(Basket basket);
-    int size(Basket basket);
-    Optional<Basket> getUserBasket(User user);
-    void addProductToBasket(Basket basket, Product product);
+    Optional<Basket> getBasketById(Long basketId);
+    Optional<Basket> getBasketByUser(Long userId);
+    void clearBasket(Long basketId);
+    void addProduct(Basket basket, Product product);
+    void removeProduct(Basket basket, Product product);
 }

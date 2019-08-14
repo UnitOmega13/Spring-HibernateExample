@@ -6,22 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import service.UserService;
 
 import java.util.Optional;
 
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private UsersDAO usersDao;
+    private UserService userService;
 
     @Autowired
-    public UserDetailsServiceImpl(UsersDAO userDao){
-        this.usersDao = userDao;
+    public UserDetailsServiceImpl(UserService userService){
+        this.userService = userService;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Optional<User> optionalUser = usersDao.getUserByLogin(login);
+        Optional<User> optionalUser = userService.getUserByLogin(login);
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         } else {
