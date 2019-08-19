@@ -32,7 +32,8 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product) {
+    public String addProduct(@ModelAttribute Product product, 
+                             @RequestParam("price") Double price) {
         if (product.getPrice() == null) {
             product.setPrice(0.0);
         }
