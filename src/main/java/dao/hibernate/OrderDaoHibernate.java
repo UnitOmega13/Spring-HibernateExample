@@ -34,7 +34,7 @@ public class OrderDaoHibernate implements OrderDetailsDAO {
             if (transaction != null) {
                 transaction.rollback();
             }
-            logger.error("Error adding order", e);
+            logger.error("Error adding order.", e);
         }
     }
 
