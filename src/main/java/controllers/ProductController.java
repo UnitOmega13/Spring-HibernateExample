@@ -33,10 +33,9 @@ public class ProductController {
 
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product, 
+                             @RequestParam("product") String productName,
+                             @RequestParam("description") String description,
                              @RequestParam("price") Double price) {
-        if (product.getPrice() == null) {
-            product.setPrice(0.0);
-        }
         productService.add(product);
         return "redirect:/admin/products";
     }
