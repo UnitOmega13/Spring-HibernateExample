@@ -19,31 +19,26 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository = productRepository;
     }
 
-    @Transactional
     @Override
     public void add(Product product) {
         productRepository.save(product);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<Product> getAll() {
         return productRepository.findAll();
     }
 
-    @Transactional
     @Override
     public Optional<Product> getProduct(long productID) {
         return productRepository.findById(productID);
     }
 
-    @Transactional
     @Override
     public void removeProduct(long productID) {
         productRepository.deleteById(productID);
     }
 
-    @Transactional
     @Override
     public void updateProduct(Product product) {
         productRepository.save(product);

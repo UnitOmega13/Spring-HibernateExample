@@ -44,7 +44,6 @@ public class MailServiceImpl implements MailService {
                 });
     }
 
-    @Transactional
     @Override
     public void sendConfirmCode(OrderDetails orderDetails) {
         Session session = getSession();

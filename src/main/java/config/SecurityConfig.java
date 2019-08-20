@@ -12,8 +12,12 @@ import service.Impl.UserDetailsServiceImpl;
 import service.UserService;
 
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public SecurityConfig(UserService userService) {
+        this.userService = userService;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {

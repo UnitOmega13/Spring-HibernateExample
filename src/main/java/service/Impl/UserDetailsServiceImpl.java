@@ -22,7 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         Optional<User> optionalUser = userService.getUserByLogin(login);
         if (optionalUser.isPresent()) {

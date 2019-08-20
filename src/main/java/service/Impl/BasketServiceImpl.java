@@ -15,38 +15,33 @@ import java.util.Optional;
 @Service
 public class BasketServiceImpl implements BasketService {
 
-    private BasketRepository basketRepository;
+    private final BasketRepository basketRepository;
 
     @Autowired
     public BasketServiceImpl(BasketRepository basketRepository) {
         this.basketRepository = basketRepository;
     }
 
-    @Transactional
     @Override
     public List<Basket> getAll() {
         return basketRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void createBasket(Basket basket) {
         basketRepository.save(basket);
     }
 
-    @Transactional
     @Override
     public Optional<Basket> getBasketById(Long id) {
         return basketRepository.findById(id);
     }
 
-    @Transactional
     @Override
     public Optional<Basket> getBasketByUser(Long userId) {
         return basketRepository.getBasketByUserId(userId);
     }
 
-    @Transactional
     @Override
     public void clearBasket(Long basketId) {
         if (getBasketById(basketId).isPresent()) {
@@ -56,7 +51,6 @@ public class BasketServiceImpl implements BasketService {
         }
     }
 
-    @Transactional
     @Override
     public void addProduct(Basket basket, Product product) {
         basket.getProducts().add(product);
