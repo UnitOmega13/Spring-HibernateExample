@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface BasketRepository extends JpaRepository<Basket, Long> {
-    @Query("SELECT basket FROM Basket basket WHERE basket.user = :user AND basket.available= 'true'")
+    @Query("SELECT basket FROM Basket basket WHERE basket.user = :user AND basket.available = 'true'")
     Optional<Basket> getBasketByUserId(Long userId);
 }

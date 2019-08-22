@@ -19,26 +19,31 @@ public class DigitalCodeServiceImpl implements DigitalCodeService {
         this.digitalCodeRepository = digitalCodeRepository;
     }
 
+    @Transactional
     @Override
     public List<DigitalCode> getAll() {
         return digitalCodeRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void create(DigitalCode digitalCode) {
         digitalCodeRepository.save(digitalCode);
     }
 
+    @Transactional
     @Override
     public Optional<DigitalCode> getCodeById(Long id) {
         return digitalCodeRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public Optional<DigitalCode> getCodeByUserId(Long userId) {
         return digitalCodeRepository.getDigitalCodeByUserID(userId);
     }
 
+    @Transactional
     @Override
     public void remove(Long codeId) {
         digitalCodeRepository.deleteById(codeId);

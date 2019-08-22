@@ -14,30 +14,36 @@ import java.util.Optional;
 public class OrderDetailsServiceImpl implements OrderService {
     private OrderDetailsRepository orderDetailsRepository;
 
-    @Autowired OrderDetailsServiceImpl(OrderDetailsRepository orderDetailsRepository){
+    @Autowired
+    OrderDetailsServiceImpl(OrderDetailsRepository orderDetailsRepository){
         this.orderDetailsRepository = orderDetailsRepository;
     }
 
+    @Transactional
     @Override
     public List<OrderDetails> getAll() {
         return orderDetailsRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void newOrder(OrderDetails orderDetails) {
         orderDetailsRepository.save(orderDetails);
     }
 
+    @Transactional
     @Override
     public Optional<OrderDetails> getOrderById(Long id) {
         return orderDetailsRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public Optional<OrderDetails> getOrderByUserId(Long userId) {
         return orderDetailsRepository.getOrderDetailsByUserId(userId);
     }
 
+    @Transactional
     @Override
     public void remove(Long id) {
         orderDetailsRepository.deleteById(id);
